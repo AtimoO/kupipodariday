@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { WishesService } from './wishes.service';
 import { CreateWishDto } from './dto/create-wish.dto';
 import { UpdateWishDto } from './dto/update-wish.dto';
@@ -8,27 +16,37 @@ export class WishesController {
   constructor(private readonly wishesService: WishesService) {}
 
   @Post()
-  create(@Body() createWishDto: CreateWishDto) {
-    return this.wishesService.create(createWishDto);
+  create() {
+    return '';
   }
 
-  @Get()
-  findAll() {
-    return this.wishesService.findAll();
+  @Get('last')
+  findLastWishes() {
+    return '';
+  }
+
+  @Get('top')
+  findTopWishes() {
+    return '';
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.wishesService.findOne(+id);
+  findOneById() {
+    return '';
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateWishDto: UpdateWishDto) {
-    return this.wishesService.update(+id, updateWishDto);
+  update() {
+    return '';
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.wishesService.remove(+id);
+  remove() {
+    return '';
+  }
+
+  @Post(':id/copy')
+  copyWish() {
+    return '';
   }
 }

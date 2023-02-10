@@ -15,31 +15,28 @@ import { UpdateWishlistDto } from './dto/update-wishlist.dto';
 export class WishlistsController {
   constructor(private readonly wishlistsService: WishlistsService) {}
 
-  @Post()
-  create(@Body() createWishlistDto: CreateWishlistDto) {
-    return this.wishlistsService.create(createWishlistDto);
-  }
-
   @Get()
   findAll() {
-    return this.wishlistsService.findAll();
+    return '';
+  }
+
+  @Post()
+  create() {
+    return '';
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.wishlistsService.findOne(+id);
+  findOneById() {
+    return '';
   }
 
   @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateWishlistDto: UpdateWishlistDto,
-  ) {
-    return this.wishlistsService.update(+id, updateWishlistDto);
+  update() {
+    return '';
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.wishlistsService.remove(+id);
+  remove() {
+    return '';
   }
 }

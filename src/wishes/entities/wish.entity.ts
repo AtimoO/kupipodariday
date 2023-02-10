@@ -5,6 +5,7 @@ import {
   IsOptional,
   IsUrl,
   Length,
+  Min,
 } from 'class-validator';
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
@@ -30,6 +31,7 @@ export class Wish extends DefaultEntity {
 
   @Column({ scale: 2 })
   @IsNotEmpty()
+  @Min(1)
   price: number;
 
   @Column({ scale: 2, nullable: true })
