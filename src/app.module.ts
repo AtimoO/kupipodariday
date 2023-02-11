@@ -5,6 +5,7 @@ import { UsersModule } from './users/users.module';
 import { WishesModule } from './wishes/wishes.module';
 import { WishlistsModule } from './wishlists/wishlists.module';
 import { OffersModule } from './offers/offers.module';
+import { AuthModule } from './auth/auth.module';
 import config from './config/config';
 import { User } from './users/entities/user.entity';
 import { Offer } from './offers/entities/offer.entity';
@@ -28,6 +29,7 @@ import { Wishlist } from './wishlists/entities/wishlist.entity';
     WishesModule,
     WishlistsModule,
     OffersModule,
+    AuthModule,
   ],
 })
 export class AppModule {}

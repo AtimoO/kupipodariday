@@ -13,7 +13,7 @@ export class UsersService {
     private readonly userRepository: Repository<User>,
   ) {}
 
-  async create(createUserDto: CreateUserDto): Promise<User> {
+  async create(createUserDto: CreateUserDto) {
     try {
       const hashPassword = await hash(createUserDto.password, 10);
       const newUser = this.userRepository.create({
@@ -28,19 +28,23 @@ export class UsersService {
     }
   }
 
-  async findAll(): Promise<Array<User>> {
+  findAll() {
     return this.userRepository.find();
   }
 
-  async findOneById(id: number): Promise<User> {
+  findOneById(id: number) {
     return this.userRepository.findOneBy({ id });
   }
 
-  async update(id: number, updateUserDto: UpdateUserDto) {
+  findOneByUsername(username: string) {
+    return this.userRepository.findOneBy({ username });
+  }
+
+  update(id: number, updateUserDto: UpdateUserDto) {
     return this.userRepository.update({ id }, updateUserDto);
   }
 
-  async remove(id: number) {
+  remove(id: number) {
     return this.userRepository.delete({ id });
   }
 }
