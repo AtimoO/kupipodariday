@@ -34,7 +34,7 @@ export class Wish extends DefaultEntity {
   @Min(1)
   price: number;
 
-  @Column({ scale: 2, nullable: true })
+  @Column({ default: 0, scale: 2, nullable: true })
   @IsOptional()
   raised: number;
 

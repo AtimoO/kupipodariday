@@ -21,30 +21,35 @@ export class UsersService {
         password: hashPassword,
       });
       const savedUser = await this.userRepository.save(newUser);
-      console.log('savedUser', savedUser);
       return savedUser;
     } catch (err) {
       throw new Error(err.message);
     }
   }
 
-  findAll() {
-    return this.userRepository.find();
+  async findAll() {
+    return await this.userRepository.find();
   }
 
-  findOneById(id: number) {
-    return this.userRepository.findOneBy({ id });
+  async findOneById(id: number) {
+    return await this.userRepository.findOneBy({ id });
   }
 
-  findOneByUsername(username: string) {
-    return this.userRepository.findOneBy({ username });
+  async findOneByUsername(username: string) {
+    return await this.userRepository.findOneBy({ username });
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return this.userRepository.update({ id }, updateUserDto);
+  async findMany(user) {
+    return await this.userRepository.find({
+      where: [{ email: user.query }, { username: user.query }],
+    });
   }
 
-  remove(id: number) {
-    return this.userRepository.delete({ id });
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    return await this.userRepository.update({ id }, updateUserDto);
+  }
+
+  async remove(id: number) {
+    return await this.userRepository.delete({ id });
   }
 }

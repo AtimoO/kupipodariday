@@ -2,18 +2,17 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateOfferDto } from './dto/create-offer.dto';
-import { UpdateOfferDto } from './dto/update-offer.dto';
+// import { UpdateOfferDto } from './dto/update-offer.dto';
 import { User } from './../users/entities/user.entity';
 import { Offer } from './entities/offer.entity';
 import { WishesService } from '../wishes/wishes.service';
-// import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class OffersService {
   constructor(
     @InjectRepository(Offer)
     private readonly offersRepository: Repository<Offer>,
-    private readonly wishesService: WishesService, //private readonly usersService: UsersService,
+    private readonly wishesService: WishesService,
   ) {}
 
   async create(user: User, createOfferDto: CreateOfferDto): Promise<Offer> {
@@ -37,22 +36,22 @@ export class OffersService {
     return await this.offersRepository.save(offer);
   }
 
-  findAll(): Promise<Array<Offer>> {
-    return this.offersRepository.find({ relations: ['item', 'user'] });
+  async findAll(): Promise<Array<Offer>> {
+    return await this.offersRepository.find({ relations: ['item', 'user'] });
   }
 
-  findOneById(id: number): Promise<Offer> {
-    return this.offersRepository.findOne({
+  async findOneById(id: number): Promise<Offer> {
+    return await this.offersRepository.findOne({
       where: { id },
       relations: ['item', 'user'],
     });
   }
 
-  update(id: number, updateOfferDto: UpdateOfferDto) {
-    return this.offersRepository.update(id, updateOfferDto);
-  }
+  // async update(id: number, updateOfferDto: UpdateOfferDto) {
+  //   return await this.offersRepository.update(id, updateOfferDto);
+  // }
 
-  remove(id: number) {
-    return this.offersRepository.delete(id);
-  }
+  // async remove(id: number) {
+  //   return await this.offersRepository.delete(id);
+  // }
 }

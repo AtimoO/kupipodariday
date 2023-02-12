@@ -1,11 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateWishDto } from './dto/create-wish.dto';
 import { UpdateWishDto } from './dto/update-wish.dto';
 import { User } from './../users/entities/user.entity';
 import { Wish } from './entities/wish.entity';
-import { NotFoundException } from '@nestjs/common/exceptions';
 
 @Injectable()
 export class WishesService {
@@ -21,10 +20,6 @@ export class WishesService {
     });
   }
 
-  async findAll() {
-    return `This action returns all wishes`;
-  }
-
   async findOneById(id: number) {
     const wish = await this.wishesRepository.findOne({
       relations: {
@@ -35,17 +30,38 @@ export class WishesService {
     });
 
     if (!wish) {
-      throw new NotFoundException('Подарк не найден');
+      throw new NotFoundException('Подарок не найден');
     }
 
     return wish;
   }
 
-  update(id: number, updateWishDto: UpdateWishDto) {
-    return this.wishesRepository.update(id, updateWishDto);
+  async findWishesByOwner(id: number) {
+    return this.wishesRepository.find({
+      where: { owner: { id } },
+      relations: ['offers', 'owner'],
+    });
   }
 
-  remove(id: number) {
-    return this.wishesRepository.delete({ id });
+  async update(id: number, updateWishDto: UpdateWishDto) {
+    return await this.wishesRepository.update(id, updateWishDto);
+  }
+
+  async remove(id: number) {
+    return await this.wishesRepository.delete({ id });
+  }
+
+  async findTop() {
+    return await this.wishesRepository.find({
+      take: 10,
+      order: { copied: 'DESC' },
+    });
+  }
+
+  async findLast() {
+    return await this.wishesRepository.find({
+      take: 40,
+      order: { createdAt: 'DESC' },
+    });
   }
 }

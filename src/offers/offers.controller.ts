@@ -3,30 +3,38 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
-  Delete,
+  UseGuards,
+  Req,
+  NotFoundException,
 } from '@nestjs/common';
 import { OffersService } from './offers.service';
 import { CreateOfferDto } from './dto/create-offer.dto';
-import { UpdateOfferDto } from './dto/update-offer.dto';
+import { JwtGuard } from '../auth/jwt/jwt.guard';
 
+@UseGuards(JwtGuard)
 @Controller('offers')
 export class OffersController {
   constructor(private readonly offersService: OffersService) {}
 
   @Post()
-  create() {
-    return '';
+  async create(@Req() req, @Body() createOfferDto: CreateOfferDto) {
+    return await this.offersService.create(req.user, createOfferDto);
   }
 
   @Get()
-  findAll() {
-    return '';
+  async findAll() {
+    return await this.offersService.findAll();
   }
 
   @Get(':id')
-  findOneById() {
-    return '';
+  async findOneById(@Param('id') id: number) {
+    const offer = await this.offersService.findOneById(id);
+
+    if (!offer) {
+      throw new NotFoundException('Взнос не найден');
+    }
+
+    return offer;
   }
 }
